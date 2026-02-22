@@ -1,21 +1,19 @@
+import { useState } from "react";
 
-import Card from './components/Card';
-import { PLAYER_DATA } from './data';
-
+import "./App.css";
+const AuthorInfo = ({ user }) => (
+  <div>
+    <p>
+      Name : {user.name} Role: {user.role}
+    </p>
+  </div>
+);
+const PostHeader = ({ user }) => <AuthorInfo user={user} />;
+const PostItem = ({ user }) => <PostHeader user={user} />;
+const FeedList = ({ user }) => <PostItem user={user} />;
 function App() {
-
-
-  return <>
-    <header className='header'>
-    <h1>Football Players</h1>
-    <p>These are the GOATs</p>
-  </header>
-    <div className="card-container">
-      {PLAYER_DATA.map(player => (
-        <Card key={player.id} {...player} />
-      ))}
-    </div>
-  </>;
+  const [user] = useState({ name: "Ronan", role: "Admin" });
+  return <FeedList user={user} />;
 }
 
 export default App;

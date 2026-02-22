@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+
+  const [posts, setPosts] = useState([
+    {id:1, text:"Hello", isEdited: false},
+    {id:2, text:"Hello", isEdited: false},
+    {id:3, text:"Hello", isEdited: false}
+  ]);
+
+  const markAsEdited = (id) => {
+    setPosts(prevPosts =>
+      prevPosts.map(post =>
+        post.id === id
+          ? { ...post, isEdited: !post.isEdited }
+          : post
+      )
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      {posts.map(({id, text, isEdited}) =>
+        <h1 key={id}>
+          id:{id} text:{text} isEdited:{isEdited.toString()}
+        </h1>
+      )}
+
+      <button onClick={() => markAsEdited(3)}>
+        Toggle Post 3
+      </button>
+    </div>
   )
 }
 
